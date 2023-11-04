@@ -1,4 +1,5 @@
 #include <DHT11.h>
+#include <ArduinoJson.h>
 
 
 DHT11 dht11(2);
@@ -6,7 +7,12 @@ DHT11 dht11(2);
 void setup()
 {
     Serial.begin(9600);
+    DynamicJsonDocument<100> doc;
+    doc["Temperatura"];
+    doc["Wilgotność"];
 }
+
+
 
 void loop()
 {
@@ -23,10 +29,18 @@ void loop()
         Serial.print("Temperature: ");
         Serial.print(temperature);
         Serial.println(" °C");
+        
 
         Serial.print("Humidity: ");
         Serial.print(humidity);
         Serial.println(" %");
+        
+
+        
+        
+        String json_data = "{";
+        json_data += "\"dane\": \"" + data + "\"";
+        json_data += "}";
     }
     else // żeby pokazywało errory przy timeout i checksum
     {
@@ -42,6 +56,7 @@ void loop()
         }
     }
 
+  
   
     delay(1000); //delay żeby była różnca odczytów
 }
