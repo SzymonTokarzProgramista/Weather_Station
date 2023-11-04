@@ -1,24 +1,47 @@
-#include "SevSeg.h"
-SevSeg sevseg; 
+#include <DHT11.h>
 
-void setup() {
-  Serial.begin(9600);
-  byte numDigits = 4;   
-  byte digitPins[] = {12, 9, 8, 6};
-  byte segmentPins[] = {11, 7, 4, 2, 1, 10, 5, 3};
-  bool resistorsOnSegments = true; 
-  byte hardwareConfig = COMMON_CATHODE; 
-  sevseg.begin(hardwareConfig, numDigits, digitPins, segmentPins, resistorsOnSegments);
+
+DHT11 dht11(2);
+
+void setup()
+{
+    Serial.begin(9600);
 }
 
+void loop()
+{
 
-void loop() {
-  int potencjometr = analogRead(A0); 
-  potencjometr = map(potencjometr, 0, 1023, 0, 5000); 
-  float termometr =((analogRead(A1)* 5.0) / 1024.0) * 100;
+    int temperature = dht11.readTemperature();
+
+
+
+    int humidity = dht11.readHumidity();
+
+    if (temperature != DHT11::ERROR_CHECKSUM && temperature != DHT11::ERROR_TIMEOUT &&
+        humidity != DHT11::ERROR_CHECKSUM && humidity != DHT11::ERROR_TIMEOUT) // pewnie można to skrócić
+    {
+        Serial.print("Temperature: ");
+        Serial.print(temperature);
+        Serial.println(" °C");
+
+        Serial.print("Humidity: ");
+        Serial.print(humidity);
+        Serial.println(" %");
+    }
+    else // żeby pokazywało errory przy timeout i checksum
+    {
+        if (temperature == DHT11::ERROR_TIMEOUT || temperature == DHT11::ERROR_CHECKSUM)
+        {
+            Serial.print("Temperature Reading Error: ");
+            Serial.println(DHT11::getErrorString(temperature));
+        }
+        if (humidity == DHT11::ERROR_TIMEOUT || humidity == DHT11::ERROR_CHECKSUM)
+        {
+            Serial.print("Humidity Reading Error: ");
+            Serial.println(DHT11::getErrorString(humidity));
+        }
+    }
+
   
-  sevseg.setNumber(potencjometr, 3);
-  sevseg.refreshDisplay();
-  Serial.print(termometr);
-  
+    delay(1000); //delay żeby była różnca odczytów
 }
