@@ -9,23 +9,16 @@ EthernetServer server(80);
 void setup()
 {
     Serial.begin(9600);
-    if (Serial.available()){
-      server.begin();
-    }
-    else
-      Serial.println("Failed");
+
 }
 
 
 
 void loop()
 {
-  EthernetClient client = server.available();
-  if (!client){
-    return;
-  }
 
-  StaticJsonDocument<500> doc; //utworzenie dokumentu json
+
+  StaticJsonDocument<500> doc; //utworzenie json
 
   JsonArray temp = doc.createNestedArray("valTemp"); //utworzenie listy zagnieżdżonej do temperatury
 
