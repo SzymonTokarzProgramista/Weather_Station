@@ -1,21 +1,29 @@
 #include <DHT11.h>
 #include <ArduinoJson.h>
+#include <Ethernet.h>
 
 
 DHT11 dht11(2);
+EthernetServer server(80);
 
 void setup()
 {
     Serial.begin(9600);
-    StaticJsonDocument<200> doc;
-    String jsonString;
-    serializeJson(doc, jsonString);
+    if (Serial.available()){
+      server.begin();
+    }
+    else
+      Serial.println("Failed");
 }
 
 
 
 void loop()
 {
+  EthernetClient client = server.available();
+  if (!client){
+    return;
+  }
 
     float temperature = dht11.readTemperature();
 
