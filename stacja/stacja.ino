@@ -7,11 +7,11 @@ DHT11 dht11(2);
 void setup()
 {
     Serial.begin(9600);
-    DynamicJsonDocument doc(100);
-    doc["Temperatura"];
-    doc["Wilgotność"];
-    JsonArray dataTemp = doc.createNestedArray("dataTemp");
-    JsonArray dataHum = doc.createNestedArray("dataHum");
+    //DynamicJsonDocument doc(100);
+    //doc["Temperatura"];
+    //doc["Wilgotność"];
+    //JsonArray dataTemp = doc.createNestedArray("dataTemp");
+    //JsonArray dataHum = doc.createNestedArray("dataHum");
 }
 
 
@@ -31,13 +31,13 @@ void loop()
         Serial.print("Temperature: ");
         Serial.print(temperature);
         Serial.println(" °C");
-        dataTemp.add(temperature);
+        //dataTemp.add(temperature);
         
 
         Serial.print("Humidity: ");
         Serial.print(humidity);
         Serial.println(" %");
-        dataHum.add(humidity);
+        //dataHum.add(humidity);
         
 
         
