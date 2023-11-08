@@ -25,11 +25,15 @@ void loop()
     return;
   }
 
-    float temperature = dht11.readTemperature();
+  StaticJsonDocument<500> doc; //utworzenie dokumentu json
 
+  JsonArray temp = doc.createNestedArray("valTemp"); //utworzenie listy zagnieżdżonej do temperatury
 
+  JsonArray hum = doc.createNestedArray("valHum");// do wilgotności
 
-    float humidity = dht11.readHumidity();
+  float temperature = dht11.readTemperature();
+
+  float humidity = dht11.readHumidity();
 
     if (temperature != DHT11::ERROR_CHECKSUM && temperature != DHT11::ERROR_TIMEOUT &&
         humidity != DHT11::ERROR_CHECKSUM && humidity != DHT11::ERROR_TIMEOUT) // pewnie można to skrócić
@@ -37,13 +41,13 @@ void loop()
         Serial.print("Temperature: ");
         Serial.print(temperature);
         Serial.println(" °C");
-        float doc["Temperatura"]=temperature;
+        temp.add(temperature);
         
 
         Serial.print("Humidity: ");
         Serial.print(humidity);
         Serial.println(" %");
-        float doc["Wilgotność"]=humidity;
+        hum.add(humidity);
         
 
         
