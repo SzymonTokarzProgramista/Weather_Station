@@ -8,8 +8,6 @@ void setup()
 {
     Serial.begin(9600);
     StaticJsonDocument<200> doc;
-    int doc["Temperatura"];
-    int doc["Wilgotność"];
     String jsonString;
     serializeJson(doc, jsonString);
 }
@@ -19,11 +17,11 @@ void setup()
 void loop()
 {
 
-    int temperature = dht11.readTemperature();
+    float temperature = dht11.readTemperature();
 
 
 
-    int humidity = dht11.readHumidity();
+    float humidity = dht11.readHumidity();
 
     if (temperature != DHT11::ERROR_CHECKSUM && temperature != DHT11::ERROR_TIMEOUT &&
         humidity != DHT11::ERROR_CHECKSUM && humidity != DHT11::ERROR_TIMEOUT) // pewnie można to skrócić
@@ -31,13 +29,13 @@ void loop()
         Serial.print("Temperature: ");
         Serial.print(temperature);
         Serial.println(" °C");
-        doc["Temperatura"]=temperature;
+        float doc["Temperatura"]=temperature;
         
 
         Serial.print("Humidity: ");
         Serial.print(humidity);
         Serial.println(" %");
-        doc["Wilgotność"]=humidity;
+        float doc["Wilgotność"]=humidity;
         
 
         
