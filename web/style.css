@@ -1,29 +1,27 @@
+.flexbox{
+    display: flex;
+}
+
 .parametres1{
-    position: absolute;
+    flex: 1;
     font-size:large;
     font-style: italic;
-    background-clip: padding-box;
-    box-shadow: 0 0 50px #ff6600;
-    border: 0px;
-    top:100px;
-    left:100px;
-    content: green;
+    margin: 50px;
 }
 
 .parametres2{
-    position: absolute;
+    flex: 2;
     padding: green;
     border: 0px;
-    top:100px;
-    left:400px;
+    margin-right: 100px;
+
 }
 
 .parametres3{
-    position: absolute;
+    flex:3;
     padding: 50px green;
-    border: 0px;
-    top:100px;
-    left:700px;
+    margin-right: 50px;
+
 }
 
 
